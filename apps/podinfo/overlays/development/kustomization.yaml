@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: podinfo-dev
 resources:
   - ../../base
+  - ingress.yaml
 namePrefix: dev-
 patches:
   - target:
