@@ -1,20 +1,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dev-podinfo
-  namespace: podinfo-dev
+  name: prod-podinfo
+  namespace: podinfo-prod
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-http01
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - podinfo-prod.student-sgnl.dski23a.timebertt.dev  # ← DEINE DOMAIN
+      secretName: prod-podinfo-tls
   rules:
-    - host: podinfo-prod.local
+    - host: podinfo-prod.student-sgnl.dski23a.timebertt.dev
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: dev-podinfo
+                name: prod-podinfo
                 port:
                   number: 9898

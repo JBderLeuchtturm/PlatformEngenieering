@@ -5,10 +5,15 @@ metadata:
   namespace: podinfo-dev
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-http01
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - podinfo-dev.student-sgnl.dski23a.timebertt.dev  # ← DEINE DOMAIN
+      secretName: dev-podinfo-tls
   rules:
-    - host: podinfo-dev.local
+    - host: podinfo-dev.student-sgnl.dski23a.timebertt.dev
       http:
         paths:
           - path: /
